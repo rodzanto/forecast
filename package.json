@@ -1,0 +1,47 @@
+{
+  "name": "forecastdemo",
+  "version": "1.0.0",
+  "description": "Demo application to test Amazon Forecast service",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "aws-cli-js": "^2.0.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rodzanto/forecast.git"
+  },
+  "keywords": [
+    "AWS",
+    "Forecast",
+    "NodeJS",
+    "HTML",
+    "JavaScript"
+  ],
+  "engines": {
+    "node": ">= 10.16.0",
+    "npm": ">= 6.9.0"
+  },
+  "author": {
+    "name": "Juanan Albarrán",
+    "email": "jaf@amazon.com"
+  },
+  "contributors": [
+    {
+      "name": "Antonio Rodriguez",
+      "email": "rodzanto@amazon.com"
+    },
+    {
+      "name": "Juanan Albarrán",
+      "email": "jaf@amazon.com"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/rodzanto/forecast/issues"
+  },
+  "homepage": "https://github.com/rodzanto/forecast#readme"
+}
