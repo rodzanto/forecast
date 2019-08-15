@@ -13,9 +13,11 @@ var options = new Options(
 );
 var AWS = new Aws(options);
 
+/*
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/web/index.html'));
 });
+*/
 
 app.get('/queryForecast', function (req, res) {
     console.log('New forecast requested:')

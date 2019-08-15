@@ -1,2 +1,6 @@
+# NodeJS exclusions
 node_modules/
 package-lock.json
+
+# MacOSX exclusions
+.DS_Store

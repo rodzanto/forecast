@@ -1,15 +1,15 @@
 {
-  "name": "forecastdemo",
+  "name": "forecast-demo-back",
   "version": "1.0.0",
-  "description": "Demo application to test Amazon Forecast service",
+  "description": "Backend of a demo application to test Amazon Forecast service",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "express": "^4.17.1",
-    "aws-cli-js": "^2.0.6"
+    "aws-cli-js": "^2.0.6",
+    "express": "^4.17.1"
   },
   "repository": {
     "type": "git",
@@ -19,8 +19,7 @@
     "AWS",
     "Forecast",
     "NodeJS",
-    "HTML",
-    "JavaScript"
+    "Backend"
   ],
   "engines": {
     "node": ">= 10.16.0",
