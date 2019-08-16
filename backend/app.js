@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-var path = require('path');
+/*var path = require('path');*/
 var awsCli = require('aws-cli-js');
 
 var Options = awsCli.Options;
@@ -38,8 +38,10 @@ app.get('/queryForecast', function (req, res) {
     });
 });
 
+/*
 app.use(express.static('web'));
+*/
 
 app.listen(3000, function () {
-    console.log('Forecast Demo is running on port 3000!');
+    console.log('Backend for the Forecast Demo Application is running on port 3000!');
 });

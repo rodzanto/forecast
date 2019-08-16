@@ -21,10 +21,6 @@
     "NodeJS",
     "Backend"
   ],
-  "engines": {
-    "node": ">= 10.16.0",
-    "npm": ">= 6.9.0"
-  },
   "author": {
     "name": "Juanan Albarrán",
     "email": "jaf@amazon.com"
