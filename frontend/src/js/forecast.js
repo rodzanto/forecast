@@ -1,5 +1,5 @@
 /*********************************************************************/
-/*****************************  Index  *******************************/
+/***************************  Forecast  ******************************/
 /*********************************************************************/
 var endpointForecastDemo = 'http://localhost:3000'
 var lineChart = null;
@@ -23,22 +23,45 @@ function getForecast() {
             item_id: $('#forecast-key').val()
         },
 	    success: function(data) {
+            console.log(data);
             $('#forecast-chart').css('display', 'block');
             var predictions = data.Forecast.Predictions;
             var labels = [], mean = [], p10 = [], p50 = [], p90 = [];
-            for (i=0; i<predictions.mean.length; i++) {
-                labels.push(moment(predictions.mean[i].Timestamp).format('YYYY-MM-DD HH:mm'));
-                mean.push(predictions.mean[i].Value);
+            var foundLabels = false;
+            if (predictions.mean != null) {
+                for (i=0; i<predictions.mean.length; i++) {
+                    labels.push(moment(predictions.mean[i].Timestamp).format('YYYY-MM-DD HH:mm'));
+                    mean.push(predictions.mean[i].Value);
+                }
+                foundLabels = true;
             }
-            for (i=0; i<predictions.p10.length; i++) {
-                p10.push(predictions.p10[i].Value);
+            if (predictions.p10 != null) {
+                for (i=0; i<predictions.p10.length; i++) {
+                    if (!foundLabels) {
+                        labels.push(moment(predictions.p10[i].Timestamp).format('YYYY-MM-DD HH:mm'));
+                    }
+                    p10.push(predictions.p10[i].Value);
+                }
+                foundLabels = true;
             }
-            for (i=0; i<predictions.p50.length; i++) {
-                p50.push(predictions.p50[i].Value);
+            if (predictions.p50 != null) {
+                for (i=0; i<predictions.p50.length; i++) {
+                    if (labels.length == 0) {
+                        labels.push(moment(predictions.p50[i].Timestamp).format('YYYY-MM-DD HH:mm'));
+                    }
+                    p50.push(predictions.p50[i].Value);
+                }
+                foundLabels = true;
             }
-            for (i=0; i<predictions.p90.length; i++) {
-                p90.push(predictions.p90[i].Value);
-			}
+            if (predictions.p90 != null) {
+                for (i=0; i<predictions.p90.length; i++) {
+                    if (labels.length == 0) {
+                        labels.push(moment(predictions.p90[i].Timestamp).format('YYYY-MM-DD HH:mm'));
+                    }
+                    p90.push(predictions.p90[i].Value);
+                }
+                foundLabels = true;
+            }
             var ctx = document.getElementById("forecast-chart");
             lineChart = new Chart(ctx, {
                 type: 'line',
@@ -111,6 +134,7 @@ $(function() {
 			format: 'YYYY/MM/DD HH:mm'
 		}
     });
+    // End date
 	$('#end-date').daterangepicker({
         singleDatePicker: true,
         showDropdowns: true,
@@ -121,5 +145,21 @@ $(function() {
 		locale: {
 			format: 'YYYY/MM/DD HH:mm'
 		}
+    });
+    // Get Forecast Button
+    $('#get-forecast').on('click', function(e) {
+        getForecast();
+        e.preventDefault();
+    });
+    // Add canvas
+    $('#root').after(
+        '<div id="div-forecast-chart" class="row">' +
+        '   <div class="col-10 offset-1">' +
+        '       <canvas id="forecast-chart" width="100%" style="background-color: white; border-radius: 10px; display: none"></canvas>' +
+        '   </div>' +
+        '</div>')
+    // Sign Out
+    $('#root button span:contains("Sign Out")').parent().on('click', function(e) {
+        $('#div-forecast-chart').remove();
     });
 });

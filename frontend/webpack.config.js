@@ -38,7 +38,7 @@ module.exports = {
             filename: "./index.html"
         }),
         new CopyPlugin([
-            {from:'./src/js/index.js', to:'./js/index.js'},
+            {from:'./src/js/forecast.js', to:'./js/forecast.js'},
             {from:'./src/images/favicon.png', to:'./images/favicon.png'}
         ]),
     ]
