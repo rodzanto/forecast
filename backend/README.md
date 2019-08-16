@@ -1,6 +1,8 @@
 # Backend Forecast Demo
 This module of the demo application publishes a simple API REST with a couple of methods to interact with the **AWS CLI**.
-Regarding this purpose, an **Express server** will be launched but before starting it, it is necessary to fill three params for the configuration:
+
+## Setup
+For publishing the services, an **Express server** will be launched. But before starting it, it is necessary to fill three params for the configuration:
 ```
 var options = new Options(
 	/* accessKey    */ '<Fill this placeholder with an access key>',
@@ -9,6 +11,7 @@ var options = new Options(
 	/* currentWorkingDirectory*/  null
 );
 ```
+
 After doing the previous step you can install the necessary dependencies and start the server:
 ```
 npm install

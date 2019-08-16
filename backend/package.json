@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "aws-cli-js": "^2.0.6",
+    "cors": "^2.8.5",
     "express": "^4.17.1"
   },
   "repository": {
@@ -35,6 +36,7 @@
       "email": "jaf@amazon.com"
     }
   ],
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/rodzanto/forecast/issues"
   },

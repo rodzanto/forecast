@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var cors = require('cors');
 /*var path = require('path');*/
 var awsCli = require('aws-cli-js');
 
@@ -30,6 +31,8 @@ app.get('/queryForecast', function (req, res) {
     command = command + ' --filter item_id=' + req.query.item_id;
     AWS.command(command, function (err, data) {
         if (err == null) {
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
             res.send(data.object);
         } else {
             res.status(500);
@@ -41,7 +44,7 @@ app.get('/queryForecast', function (req, res) {
 /*
 app.use(express.static('web'));
 */
-
+app.use(cors());
 app.listen(3000, function () {
     console.log('Backend for the Forecast Demo Application is running on port 3000!');
 });
