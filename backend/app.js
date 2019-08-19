@@ -57,15 +57,21 @@ app.get('/queryForecast', function (req, res) {
     console.log('+ End date: ' + req.query.end_date);
     console.log('+ Item ID: ' + req.query.item_id);
     command = 'forecastquery query-forecast --forecast-arn arn:aws:forecast:us-east-1:889960878219:forecast/forecast_demo2';
-    // command = command + ' --start-date "' + req.query.start_date + '"';
-    // command = command + ' --end-date "' + req.query.end_date + '"';
-    command = command + ' --start-date "' + '2015-01-01T01:00:00Z' + '"';
-    command = command + ' --end-date "' + '2015-01-02T00:00:00Z' + '"';
+    if (new Date(req.query.start_date) < new Date('2015-01-01T01:00:00Z')) {
+        command = command + ' --start-date "' + '2015-01-01T01:00:00Z' + '"';
+    } else {
+        command = command + ' --start-date "' + req.query.start_date + '"';
+    }
+    if (new Date(req.query.end_date) > new Date('2015-01-03T00:00:00Z')) {
+        command = command + ' --end-date "' + '2015-01-03T00:00:00Z' + '"';
+    } else {
+        command = command + ' --end-date "' + req.query.end_date + '"';
+    }
     command = command + ' --filter item_id=' + req.query.item_id;
     AWS.command(command, function (err, data) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         if (err == null) {
-            res.header("Access-Control-Allow-Origin", "*");
-            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
             res.send(data.object);
         } else {
             res.status(500);

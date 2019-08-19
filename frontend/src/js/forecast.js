@@ -23,7 +23,8 @@ function getChartData() {
 }
 
 function drawForecast() {
-    if (responseHistoricalData != null && responseForecast != null) {
+    if (responseHistoricalData != null && typeof(responseHistoricalData.data) !== "undefined"
+            && responseForecast != null && typeof(responseForecast.Forecast) !== "undefined") {
         clearInterval(drawChart);
         $('#forecast-chart').css('display', 'block');
         var labels = [], historical = [], mean = [], p10 = [], p50 = [], p90 = [], draw_data = [];
@@ -136,6 +137,11 @@ function drawForecast() {
                 datasets: draw_data
             },
         });
+        $('#modal-loading').modal('hide');
+    } else if ((responseHistoricalData != null && typeof(responseHistoricalData.data) === "undefined")
+                || (responseForecast != null && typeof(responseForecast.Forecast) === "undefined")) {
+        lineChart = null;
+        clearInterval(drawChart);
         $('#modal-loading').modal('hide');
     }
 }
