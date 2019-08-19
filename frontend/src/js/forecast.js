@@ -1,7 +1,8 @@
 /*********************************************************************/
 /***************************  Forecast  ******************************/
 /*********************************************************************/
-var endpointForecastDemo = 'http://localhost:3000'
+//var endpointForecastDemo = 'http://localhost:3000'
+var endpointForecastDemo = window.location.href.split("/")[0] + "//" + window.location.href.split("/")[2].split(":")[0] + ":3000";
 var lineChart = null, drawChart = null;
 var responseHistoricalData = null, responseForecast = null;
 
