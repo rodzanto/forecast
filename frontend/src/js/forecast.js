@@ -12,9 +12,9 @@ function getChartData() {
         lineChart.destroy();
     }
     $('#forecast-chart').css('display', 'none');
-	startDate = $('#start-date').data('daterangepicker').startDate.format('YYYY-MM-DDTHH:mm:ss');
-    endDate = $('#end-date').data('daterangepicker').endDate.format('YYYY-MM-DDTHH:mm:ss');
-    itemId = $('#forecast-key').val();
+	var startDate = $('#start-date').data('daterangepicker').startDate.format('YYYY-MM-DDTHH:mm:ss');
+    var endDate = $('#end-date').data('daterangepicker').endDate.format('YYYY-MM-DDTHH:mm:ss');
+    var itemId = $('#forecast-key').val();
     responseHistoricalData = null;
     getHistoricalData(startDate, endDate, itemId);
     responseForecast = null;
@@ -29,7 +29,7 @@ function drawForecast() {
         $('#forecast-chart').css('display', 'block');
         var labels = [], historical = [], mean = [], p10 = [], p50 = [], p90 = [], draw_data = [];
         if (responseHistoricalData.data != null) {
-            for (i=0; i<responseHistoricalData.data.length; i++) {
+            for (var i=0; i<responseHistoricalData.data.length; i++) {
                 labels.push(moment(responseHistoricalData.data[i].Timestamp).format('YYYY-MM-DD HH:mm'));
                 historical.push(responseHistoricalData.data[i].Value);
                 mean.push(NaN);
@@ -52,7 +52,7 @@ function drawForecast() {
         var foundForecastLabels = false;
         var predictions = responseForecast.Forecast.Predictions;
         if (predictions.mean != null) {
-            for (i=0; i<predictions.mean.length; i++) {
+            for (var i=0; i<predictions.mean.length; i++) {
                 labels.push(moment(predictions.mean[i].Timestamp).format('YYYY-MM-DD HH:mm'));
                 mean.push(predictions.mean[i].Value);
             }
@@ -70,7 +70,7 @@ function drawForecast() {
             foundForecastLabels = true;
         }
         if (predictions.p10 != null) {
-            for (i=0; i<predictions.p10.length; i++) {
+            for (var i=0; i<predictions.p10.length; i++) {
                 if (!foundForecastLabels) {
                     labels.push(moment(predictions.p10[i].Timestamp).format('YYYY-MM-DD HH:mm'));
                 }
@@ -90,7 +90,7 @@ function drawForecast() {
             foundForecastLabels = true;
         }
         if (predictions.p50 != null) {
-            for (i=0; i<predictions.p50.length; i++) {
+            for (var i=0; i<predictions.p50.length; i++) {
                 if (labels.length == 0) {
                     labels.push(moment(predictions.p50[i].Timestamp).format('YYYY-MM-DD HH:mm'));
                 }
@@ -110,7 +110,7 @@ function drawForecast() {
             foundForecastLabels = true;
         }
         if (predictions.p90 != null) {
-            for (i=0; i<predictions.p90.length; i++) {
+            for (var i=0; i<predictions.p90.length; i++) {
                 if (labels.length == 0) {
                     labels.push(moment(predictions.p90[i].Timestamp).format('YYYY-MM-DD HH:mm'));
                 }
@@ -147,7 +147,7 @@ function drawForecast() {
 }
 
 function getHistoricalData(startDate, endDate, itemId) {
-    finishHistoricalData = null;
+    responseHistoricalData = null;
 	$.ajax({
 		url: endpointForecastDemo + '/historicalData',
 		type: 'GET',
@@ -172,7 +172,7 @@ function getHistoricalData(startDate, endDate, itemId) {
 
 
 function getForecast(startDate, endDate, itemId) {
-    finishForecast = null;
+    responseForecast = null;
 	$.ajax({
 		url: endpointForecastDemo + '/queryForecast',
 		type: 'GET',

@@ -25,19 +25,19 @@ app.get('/historicalData', function (req, res) {
     console.log('+ Start date: ' + req.query.start_date);
     console.log('+ End date: ' + req.query.end_date);
     console.log('+ Item ID: ' + req.query.item_id);
-    command = 's3 cp s3://rodzanto2019ml/elec_data/item-demand-time.csv -';
+    var command = 's3 cp s3://rodzanto2019ml/elec_data/item-demand-time.csv -';
     AWS.command(command, function (err, data) {
-        response = [];
+        var response = [];
         if (err == null) {
             res.header("Access-Control-Allow-Origin", "*");
             res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
             if (data.raw != null) {
-                records = data.raw.split('\n');
-                startDate = new Date(req.query.start_date);
-                endDate = new Date(req.query.end_date);
+                var records = data.raw.split('\n');
+                var startDate = new Date(req.query.start_date);
+                var endDate = new Date(req.query.end_date);
                 for (var i=0; i<records.length; i++) {
-                    record = records[i].split(',');
-                    recordDate = new Date(record[0].replace(' ','T')+'Z');
+                    var record = records[i].split(',');
+                    var recordDate = new Date(record[0].replace(' ','T')+'Z');
                     if (recordDate >= startDate && recordDate <= endDate && record[2] == req.query.item_id) {
                         response.push({Timestamp: record[0].replace(' ','T'), Value: record[1]});
                     }
@@ -56,7 +56,7 @@ app.get('/queryForecast', function (req, res) {
     console.log('+ Start date: ' + req.query.start_date);
     console.log('+ End date: ' + req.query.end_date);
     console.log('+ Item ID: ' + req.query.item_id);
-    command = 'forecastquery query-forecast --forecast-arn arn:aws:forecast:us-east-1:889960878219:forecast/forecast_demo2';
+    var command = 'forecastquery query-forecast --forecast-arn arn:aws:forecast:us-east-1:889960878219:forecast/forecast_demo2';
     if (new Date(req.query.start_date) < new Date('2015-01-01T01:00:00Z')) {
         command = command + ' --start-date "' + '2015-01-01T01:00:00Z' + '"';
     } else {
