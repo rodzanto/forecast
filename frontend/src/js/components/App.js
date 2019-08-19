@@ -21,7 +21,7 @@ class App extends Component {
                     <div className="row mb-5">
                         <div className="col-3 form-group">
                             <label className="font-weight-bold" htmlFor="start-date">Start date</label>
-                            <input type="text" id="start-date" tabIndex="1" className="form-control" defaultValue="2015-01-01 01:00 AM" required />
+                            <input type="text" id="start-date" tabIndex="1" className="form-control" defaultValue="2014-12-31 01:00 AM" required />
                         </div>
                         <div className="col-3 form-group">
                             <label className="font-weight-bold" htmlFor="end-date">End date</label>
