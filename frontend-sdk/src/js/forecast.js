@@ -7,9 +7,9 @@
 /****************************  AWS SDK  ******************************/
 AWS.config.region = 'us-east-1';
 AWS.config.credentials = new AWS.Credentials(
-	/* accessKey    */ 'ASIA46NONKCF4SZQ6PUG',
-	/* secretKey    */ 'X9f5ml0aIHo7g0vjNhD4lx86iidPT7gA0oCkZq/j',
-	/* sessionToken */ 'FQoGZXIvYXdzEE0aDLvvjBEZl0dvQcFyNiLzARiNJt5ykAnPCuOP4DKDREsyQVnV68EtDDjXqKT4Tuv1S9xz8fdV8zHVLUOADyfO16SQGQHgVqcbsoZgxta3LPm9cg0EViW709kc3zGUW45Im44OgQjt+ps/6X5SPlsLVnwwEJRm9mVa1uOSeSWDAYm8PRcvjSm1umU7FQbn30FYktmotM5oBso7iPV9LePnd813FVGkHjRqNGzYSDSKYLHgL/0igruQnXr2+HlK1HwemlkPET7hqptZ6SibGCt8SjW7udmvU6TT/w5ITABd/E+Hng8Nf6Uyi0gNA7BGjtAYqSAlin2IvkL8/nSmg+AW4KVevyjF9vnqBQ=='
+	/* accessKey    */ '',
+	/* secretKey    */ '',
+	/* sessionToken */ ''
 );
 forecastARN = 'arn:aws:forecast:us-east-1:889960878219:forecast/forecast_demo2';
 

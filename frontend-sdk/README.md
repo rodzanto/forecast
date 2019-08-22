@@ -1,5 +1,5 @@
 # Frontend Forecast Demo
-This module of the demo application is a simple webpage that interacts with the backend module doing some REST calls using AJAX and showing the results in a graph.
+This module of the demo application is a simple webpage that uses AWS SDK for JavaScript to interact with **Amazon S3** and **Amazon Forecast**
 Additionally, it uses **AWS Amplify** and **Amazon Cognito** to only let authorized users view the forecast.
 
 ## Setup

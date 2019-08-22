@@ -6,3 +6,5 @@ The application is composed by two different modules:
 1. [backend](./backend): basically is a NodeJS Express server that deploys a couple of methods to be consumed by the frontend module.
 **IMPORTANT NOTE:** it uses **AWS CLI** because **Amazon Forecast** is in public preview and the AWS specific language libraries (AWS SDK) are not yet updated for it.
 2. [frontend](./frontend): this module is based on **React** to build the final webpage. It also uses **AWS Amplify** to have a simple integration with **Amazon Cognito** and force users to be registered before accesing the forecast results.
+
+There is another flavour to test the service and it is the module [frontend-sdk](./frontend-sdk) that uses AWS SDK to interact directly with AWS Services bypassing the backend module.
