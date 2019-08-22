@@ -1,0 +1,65 @@
+{
+  "name": "forecast-demo-front",
+  "version": "1.0.0",
+  "description": "Frontend of a demo application to test Amazon Forecast service",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --mode development --host 0.0.0.0 --port 8081",
+    "start-secure": "webpack-dev-server --https --host 0.0.0.0 --port 8443",
+    "build": "webpack --mode production"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "copy-webpack-plugin": "^5.0.4",
+    "css-loader": "^3.2.0",
+    "file-loader": "^4.2.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.39.2",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.8.0"
+  },
+  "dependencies": {
+    "aws-amplify": "^1.1.36",
+    "aws-amplify-react": "^2.3.12",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rodzanto/forecast.git"
+  },
+  "keywords": [
+    "AWS",
+    "Forecast",
+    "Amplify",
+    "Cognito",
+    "React",
+    "Webpack",
+    "Frontend"
+  ],
+  "author": {
+    "name": "Juanan Albarrán",
+    "email": "jaf@amazon.com"
+  },
+  "contributors": [
+    {
+      "name": "Antonio Rodriguez",
+      "email": "rodzanto@amazon.com"
+    },
+    {
+      "name": "Juanan Albarrán",
+      "email": "jaf@amazon.com"
+    }
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rodzanto/forecast/issues"
+  },
+  "homepage": "https://github.com/rodzanto/forecast#readme"
+}
