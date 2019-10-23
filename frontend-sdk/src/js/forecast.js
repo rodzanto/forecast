@@ -5,13 +5,12 @@
 // var endpointForecastDemo = window.location.href.split("/")[0] + "//" + window.location.href.split("/")[2].split(":")[0] + ":3000";
 
 /****************************  AWS SDK  ******************************/
-AWS.config.region = 'us-east-1';
-AWS.config.credentials = new AWS.Credentials(
-	/* accessKey    */ '',
-	/* secretKey    */ '',
-	/* sessionToken */ ''
-);
-forecastARN = 'arn:aws:forecast:us-east-1:889960878219:forecast/forecast_demo2';
+awsRegion = 'eu-west-1';
+awsAccessKeyId = '';
+awsSecretKey = '';
+awsForecastARN = '';
+awsS3Bucket = '';
+awsS3Key = '';
 
 /***********************  Forecast Functions  ************************/
 var lineChart = null, drawChart = null;
@@ -27,16 +26,17 @@ function getChartData() {
 	var startDate = $('#start-date').data('daterangepicker').startDate.format('YYYY-MM-DDTHH:mm:ss');
     var endDate = $('#end-date').data('daterangepicker').endDate.format('YYYY-MM-DDTHH:mm:ss');
     var itemId = $('#forecast-key').val();
+    var locationId = $('#forecast-key2').val();
     responseHistoricalData = null;
-    getHistoricalData(startDate, endDate, itemId);
+    getHistoricalData(startDate, endDate, itemId, locationId);
     responseForecast = null;
-    //getForecast(startDate, endDate, itemId);
+    getForecast(startDate, endDate, itemId, locationId);
     drawChart = setInterval(drawForecast, 1000);
 }
 
 function drawForecast() {
     if (responseHistoricalData != null && responseHistoricalData.length > 0
-            /*&& responseForecast != null && typeof(responseForecast.Forecast) !== "undefined"*/) {
+            && responseForecast != null && typeof(responseForecast.Forecast) !== "undefined") {
         clearInterval(drawChart);
         $('#forecast-chart').css('display', 'block');
         var labels = [], historical = [], mean = [], p10 = [], p50 = [], p90 = [], draw_data = [];
@@ -61,7 +61,6 @@ function drawForecast() {
                 data: historical
             })
         }
-        /*
         var foundForecastLabels = false;
         var predictions = responseForecast.Forecast.Predictions;
         if (predictions.mean != null) {
@@ -141,7 +140,7 @@ function drawForecast() {
                 data: p90
             });
             foundForecastLabels = true;
-        }*/
+        }
         var ctx = document.getElementById("forecast-chart");
         lineChart = new Chart(ctx, {
             type: 'line',
@@ -152,20 +151,20 @@ function drawForecast() {
         });
         $('#modal-loading').modal('hide');
     }
-    /*else if ((responseHistoricalData != null && typeof(responseHistoricalData.data) === "undefined")
+    else if ((responseHistoricalData != null && typeof(responseHistoricalData.data) === "undefined")
                 || (responseForecast != null && typeof(responseForecast.Forecast) === "undefined")) {
         lineChart = null;
         clearInterval(drawChart);
         $('#modal-loading').modal('hide');
-    }*/
+    }
 }
 
-function getHistoricalData(startDate, endDate, itemId) {
+function getHistoricalData(startDate, endDate, itemId, locationId) {
     responseHistoricalData = null;
-    var s3Service = new AWS.S3({region: 'eu-west-1'});
+    var s3Service = new AWS.S3({accessKeyId: awsAccessKeyId, secretAccessKey: awsSecretKey, region: awsRegion});
     var params = {
-        Bucket: 'rodzanto2019ml/elec_data',
-        Key: 'item-demand-time.csv'
+        Bucket: awsS3Bucket,
+        Key: awsS3Key
     };
     s3Service.getObject(params, function(err, data) {
         if (err) {
@@ -173,6 +172,7 @@ function getHistoricalData(startDate, endDate, itemId) {
             responseHistoricalData = [];
         } else {
             var raw = data.Body.toString('utf-8');
+            console.log(raw);
             responseHistoricalData = [];
             if (raw != null) {
                 var records = raw.split('\n');
@@ -180,9 +180,12 @@ function getHistoricalData(startDate, endDate, itemId) {
                 var dEndDate = new Date(endDate + 'Z');
                 for (var i=0; i<records.length; i++) {
                     var record = records[i].split(',');
-                    var recordDate = new Date(record[0].replace(' ','T')+'Z');
-                    if (recordDate >= dStartDate && recordDate <= dEndDate && record[2] == itemId) {
-                        responseHistoricalData.push({Timestamp: record[0].replace(' ','T'), Value: record[1]});
+                    var recordDate = null;
+                    if (record[1] != null) {
+                        recordDate = new Date(record[1].replace(' ','T')+'Z');
+                    }
+                    if (recordDate != null && recordDate >= dStartDate && recordDate <= dEndDate && record[0] == itemId && record[3] == locationId) {
+                        responseHistoricalData.push({Timestamp: record[1].replace(' ','T'), Value: record[2]});
                     }
                 }
             }
@@ -190,16 +193,25 @@ function getHistoricalData(startDate, endDate, itemId) {
     });
 }
 
-function getForecast(startDate, endDate, itemId) {
+function getForecast(startDate, endDate, itemId, locationId) {
     responseForecast = null;
-    var forecastQueryService = new  AWS.ForecastQueryService({region: 'us-east-1'});
+    var sStartDate = startDate + 'Z';
+    var sEndDate = endDate + 'Z';
+    if (new Date(sStartDate) < new Date('2019-08-31T00:00:00Z')) {
+        sStartDate = '2019-08-31T01:00:00Z';
+    }
+    if (new Date(sEndDate) > new Date('2019-10-04T00:00:00Z')) {
+        sEndDate = '2019-10-04T00:00:00Z';
+    } 
+    var forecastQueryService = new AWS.ForecastQueryService({accessKeyId: awsAccessKeyId, secretAccessKey: awsSecretKey, region: awsRegion});
     var params = {
         Filters: {
           'item_id': itemId,
+          'location': locationId
         },
-        ForecastArn: forecastARN,
-        StartDate: startDate + 'Z',
-        EndDate: endDate + 'Z'
+        ForecastArn: awsForecastARN,
+        StartDate: sStartDate,
+        EndDate: sEndDate
     };
     forecastQueryService.queryForecast(params, function(err, data) {
         if (err) {
@@ -207,7 +219,7 @@ function getForecast(startDate, endDate, itemId) {
             responseForecast = [];
         } else {
             console.log(data);
-            responseForecast = data.object;
+            responseForecast = data;
         }
     });
 }

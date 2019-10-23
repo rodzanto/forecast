@@ -39,6 +39,7 @@ module.exports = {
         }),
         new CopyPlugin([
             {from:'./src/js/forecast.js', to:'./js/forecast.js'},
+            {from:'./src/js/aws-sdk-2.554.0.min.js', to:'./js/aws-sdk-2.554.0.min.js'},
             {from:'./src/images/favicon.png', to:'./images/favicon.png'}
         ]),
     ]
