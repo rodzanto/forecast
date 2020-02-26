@@ -33,7 +33,7 @@ amplify push
 ```
 ![Screenshot Amplify Push command](../images/AmplifyPush.png)
 
-6. Finally, you can start the webpack server that automatically will open the url: http://localhost:8080
+6. Finally, you can start the webpack server that automatically will open the url: http://localhost:8081
 ```
 npm run start
 ```
